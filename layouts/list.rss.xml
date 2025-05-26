@@ -13,8 +13,8 @@
 	  {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
     {{ end }}
     {{ if not $.Section }}
-      {{ $sections := .Site.Params.rss.sections | default (slice "blog") }}
-      {{ .Store.Set "rssPages" (first 50 (where $.Site.RegularPages "Type" "in" $sections )) }}
+      {{ $sections := .Site.Params.rss.sections | default (slice .Site.Params.hextraRssDir) }}
+      {{ .Scratch.Set "rssPages" (first 50 (where $.Site.RegularPages "Type" "in" $sections )) }}
     {{ else }}
       {{ if $.Parent.IsHome }}
         {{ .Store.Set "rssPages" (first 50 (where $.Site.RegularPages "Type" $.Section )) }}
